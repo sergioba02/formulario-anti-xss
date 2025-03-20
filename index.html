@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario Web</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex items-center justify-center h-screen bg-gray-100">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h2 class="text-xl font-bold mb-4 text-center">Formulario anti-XSS</h2>
+        <form id="antiXSSForm">
+            <label class="block mb-2">Nombre:</label>
+            <input type="text" id="name" class="w-full p-2 border rounded mb-4" pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ]{1,50}$" title="Solo letras (1-50 caracteres)" required>
+            
+            <label class="block mb-2">Apellidos:</label>
+            <input type="text" id="lastname" class="w-full p-2 border rounded mb-4" pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ]{2,50}$" title="Solo letras (2-50 caracteres)" required>
+            
+            <label class="block mb-2">Correo Electrónico:</label>
+            <input type="email" id="email" class="w-full p-2 border rounded mb-4" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Debe ser un correo válido (ejemplo: usuario@dominio.com)" required>
+            
+            <label class="block mb-2">Edad:</label>
+            <input type="number" id="age" class="w-full p-2 border rounded mb-4" min="1" max="120" required>
+            
+            <label class="block mb-2">Género:</label>
+            <select id="gender" class="w-full p-2 border rounded mb-4" required>
+                <option value="">Seleccione...</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+                <option value="Otro">Otro</option>
+            </select>
+            
+            <label class="block mb-2">Dirección:</label>
+            <input type="text" id="address" class="w-full p-2 border rounded mb-4" pattern="^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ.,# -]{5,100}$" title="Debe contener entre 5 y 100 caracteres válidos" required>
+            
+            <label class="block mb-2">Contraseña:</label>
+            <input type="password" id="password" class="w-full p-2 border rounded mb-4" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$" title="Mínimo 8 caracteres, incluyendo una letra y un número" required>
+            
+            <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded">Enviar</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById("antiXSSForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            const email = document.getElementById("email").value;
+            
+            if (!emailPattern.test(email)) {
+                alert("Por favor, ingrese un correo electrónico válido en formato usuario@dominio.com");
+                return;
+            }
+
+            const name = document.getElementById("name").value;
+            const lastname = document.getElementById("lastname").value;
+            const age = document.getElementById("age").value;
+            const gender = document.getElementById("gender").value;
+            const address = document.getElementById("address").value;
+            const password = document.getElementById("password").value;
+
+            sessionStorage.setItem("name", name);
+            sessionStorage.setItem("lastname", lastname);
+            sessionStorage.setItem("email", email);
+            sessionStorage.setItem("age", age);
+            sessionStorage.setItem("gender", gender);
+            sessionStorage.setItem("address", address);
+            sessionStorage.setItem("password", password);
+
+            window.location.href = "data.html";
+        });
+    </script>
+</body>
+</html>
+

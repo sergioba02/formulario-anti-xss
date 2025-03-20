@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datos Ingresados</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex items-center justify-center h-screen bg-gray-100">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h2 class="text-xl font-bold mb-4 text-center">Aurorizado!</h2>
+        <p><strong>Nombre:</strong> <span id="nameDisplay"></span></p>
+        <p><strong>Apellidos:</strong> <span id="lastnameDisplay"></span></p>
+        <p><strong>Correo Electrónico:</strong> <span id="emailDisplay"></span></p>
+        <p><strong>Edad:</strong> <span id="ageDisplay"></span></p>
+        <p><strong>Género:</strong> <span id="genderDisplay"></span></p>
+        <p><strong>Dirección:</strong> <span id="addressDisplay"></span></p>
+        <p><strong>Contraseña:</strong> <span id="passwordDisplay"></span></p>
+
+        <button onclick="regresarFormulario()" class="w-full bg-blue-500 text-white p-2 rounded mt-4">Regresar al Formulario</button>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const requiredFields = ["name", "lastname", "email", "age", "gender", "address", "password"];
+            
+            for (const field of requiredFields) {
+                if (!sessionStorage.getItem(field)) {
+                    window.location.href = "index.html";
+                    return;
+                }
+            }
+
+            const name = sessionStorage.getItem("name") || "";
+            const lastname = sessionStorage.getItem("lastname") || "";
+            const email = sessionStorage.getItem("email") || "";
+            const age = sessionStorage.getItem("age") || "";
+            const gender = sessionStorage.getItem("gender") || "";
+            const address = sessionStorage.getItem("address") || "";
+            const password = sessionStorage.getItem("password") || "";
+
+            document.getElementById("nameDisplay").textContent = name;
+            document.getElementById("lastnameDisplay").textContent = lastname;
+            document.getElementById("emailDisplay").textContent = email;
+            document.getElementById("ageDisplay").textContent = age;
+            document.getElementById("genderDisplay").textContent = gender;
+            document.getElementById("addressDisplay").textContent = address;
+            document.getElementById("passwordDisplay").textContent = "*".repeat(password.length);
+        };
+
+        function regresarFormulario() {
+            sessionStorage.clear();
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>
